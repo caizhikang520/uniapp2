@@ -13,7 +13,7 @@ Vue.component('qrcodeStreamVue', {
     </p>
     <qrcode-stream
       v-if="scenVisible"
-      style="height: 200px; width: 200px"
+      :key="_uid"
       :camera="camera"
       :track="selected.value"
       @decode="onDecode"
@@ -65,6 +65,7 @@ Vue.component('qrcodeStreamVue', {
       this.scenVisible = true
     },
     paintOutline (detectedCodes, ctx) {
+      console.log(detectedCodes, ctx);
       for (const detectedCode of detectedCodes) {
         const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
 
