@@ -13,7 +13,6 @@ Vue.component('qrcodeStreamVue', {
       </select>
     </p>
     <qrcode-stream
-      v-if="scenVisible"
       :key="_uid"
       :camera="camera"
       :track="selected.value"
