@@ -4,6 +4,7 @@ Vue.component('qrcodeStreamVue', {
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
     <qrcode-stream
+      v-if="scenVisible"
       :key="_uid"
       :camera="camera"
       :track="paintOutline"
