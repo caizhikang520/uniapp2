@@ -4,10 +4,9 @@ Vue.component('qrcodeStreamVue', {
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
     <qrcode-stream
-      v-if="scenVisible"
       :key="_uid"
       :camera="camera"
-      :track="paintCenterText"
+      :track="paintOutline"
       style="height: 100vh;position: fixed;top: 0;left: 0"
       @decode="onDecode"
       @init="onInit"
@@ -77,7 +76,6 @@ Vue.component('qrcodeStreamVue', {
         const centerY = boundingBox.y + boundingBox.height/ 2
 
         const fontSize = Math.max(12, 50 * boundingBox.width/ctx.canvas.width)
-        console.log(boundingBox.width, ctx.canvas.width)
 
         ctx.font = `bold ${fontSize}px sans-serif`
         ctx.textAlign = "center"
