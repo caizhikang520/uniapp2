@@ -100,8 +100,11 @@ Vue.component('qrcodeStreamVue', {
     },
     async onInit (promise) {
       try {
-        await promise
-        this.qrScannerVisible = true
+        await promise.finally(()=>{
+          this.$nextTick(()=>{
+            this.qrScannerVisible = true
+          })
+        })
       } catch (error) {
         if (error.name === 'NotAllowedError') {
           this.error = "ERROR: you need to grant camera access permission"
