@@ -3,6 +3,7 @@ Vue.component('qrcodeStreamVue', {
   <div>
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
+    <p> {{ detectedCodes ? JSON.stringify(detectedCodes) : '' }} </p>
     <p>
       Track function:
       <select v-model="selected">
@@ -40,7 +41,8 @@ Vue.component('qrcodeStreamVue', {
       scenVisible: false,
       camera: 'rear',
       selected,
-      options
+      options,
+      detectedCodes: null
     }
   },
   methods: {
@@ -66,6 +68,7 @@ Vue.component('qrcodeStreamVue', {
     },
     paintOutline (detectedCodes, ctx) {
       console.log(detectedCodes, ctx);
+      this.detectedCodes = detectedCodes
       for (const detectedCode of detectedCodes) {
         const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
 
