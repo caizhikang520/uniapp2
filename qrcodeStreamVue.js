@@ -8,7 +8,7 @@ Vue.component('qrcodeStreamVue', {
       :key="_uid"
       :camera="camera"
       :track="paintCenterText"
-      style="height: 100vh;position: fixed;"
+      style="height: 100vh;position: fixed;top: 0;left: 0"
       @decode="onDecode"
       @init="onInit"
     />
