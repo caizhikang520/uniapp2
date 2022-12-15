@@ -4,8 +4,12 @@ Vue.component('qrcodeStreamVue', {
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
 
-    
-
+    <div v-if="qrScannerVisible" class="qr-scanner">
+        <div class="box">
+              <div class="line"></div>
+              <div class="angle"></div>
+          </div>
+    </div>
     <qrcode-stream
       v-if="scenVisible"
       :key="_uid"
@@ -14,14 +18,7 @@ Vue.component('qrcodeStreamVue', {
       style="z-index:1;height: 100vh;position: fixed;top: 0;left: 0"
       @decode="onDecode"
       @init="onInit"
-    >
-      <div class="qr-scanner">
-        <div class="box">
-              <div class="line"></div>
-              <div class="angle"></div>
-          </div>
-      </div>
-    </qrcode-stream>
+    />
     <div @click="scenCodeClick">
         扫描测试
     </div>
@@ -36,6 +33,7 @@ Vue.component('qrcodeStreamVue', {
       error: '',
       result: '',
       scenVisible: false,
+      qrScannerVisible: false,
       camera: 'rear'
     }
   },
@@ -54,6 +52,7 @@ Vue.component('qrcodeStreamVue', {
       }
     },
     onDecode (result) {
+      this.qrScannerVisible = false
       this.scenVisible = false
       this.result = result
       this.camera = 'off'
@@ -102,6 +101,7 @@ Vue.component('qrcodeStreamVue', {
     async onInit (promise) {
       try {
         await promise
+        this.qrScannerVisible = true
       } catch (error) {
         if (error.name === 'NotAllowedError') {
           this.error = "ERROR: you need to grant camera access permission"
