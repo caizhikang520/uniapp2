@@ -3,6 +3,14 @@ Vue.component('qrcodeStreamVue', {
   <div>
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
+    <p>
+      Track function:
+      <select v-model="selected">
+        <option v-for="option in options" :key="option.text" :value="option">
+          {{ option.text }}
+        </option>
+      </select>
+    </p>
     <qrcode-stream
       v-if="scenVisible"
       style="height: 200px; width: 200px"
