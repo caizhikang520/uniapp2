@@ -5,7 +5,7 @@ Vue.component('qrcodeStreamVue', {
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
     <qrcode-stream
       v-if="scenVisible"
-      style="height: 100vh; width: 100%"
+      style="height: 200px; width: 200px"
       :camera="camera"
       @decode="onDecode"
       @init="onInit"
