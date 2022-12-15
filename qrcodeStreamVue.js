@@ -3,6 +3,14 @@ Vue.component('qrcodeStreamVue', {
   <div>
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
+
+    <div v-if="scenVisible" class="qr-scanner">
+        <div class="box">
+            <div class="line"></div>
+            <div class="angle"></div>
+        </div>
+    </div>
+
     <qrcode-stream
       v-if="scenVisible"
       :key="_uid"
