@@ -4,22 +4,24 @@ Vue.component('qrcodeStreamVue', {
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
 
-    <div v-if="scenVisible" class="qr-scanner">
-        <div class="box">
-            <div class="line"></div>
-            <div class="angle"></div>
-        </div>
-    </div>
+    
 
     <qrcode-stream
       v-if="scenVisible"
       :key="_uid"
       :camera="camera"
       :track="paintOutline"
-      style="height: 100vh;position: fixed;top: 0;left: 0"
+      style="z-index:1;height: 100vh;position: fixed;top: 0;left: 0"
       @decode="onDecode"
       @init="onInit"
-    />
+    >
+      <div class="qr-scanner">
+        <div class="box">
+              <div class="line"></div>
+              <div class="angle"></div>
+          </div>
+      </div>
+    </qrcode-stream>
     <div @click="scenCodeClick">
         扫描测试
     </div>
