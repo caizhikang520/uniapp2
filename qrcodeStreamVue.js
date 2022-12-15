@@ -7,6 +7,7 @@ Vue.component('qrcodeStreamVue', {
       v-if="scenVisible"
       style="height: 200px; width: 200px"
       :camera="camera"
+      :track="selected.value"
       @decode="onDecode"
       @init="onInit"
     />
@@ -16,12 +17,22 @@ Vue.component('qrcodeStreamVue', {
   </div>
   `,
   data() {
+    const options = [
+      { text: "nothing (default)", value: undefined },
+      { text: "outline", value: this.paintOutline },
+      { text: "centered text", value: this.paintCenterText },
+      { text: "bounding box", value: this.paintBoundingBox },
+    ]
+
+    const selected = options[1]
     return {
       // 扫描
       error: '',
       result: '',
       scenVisible: false,
       camera: 'rear',
+      selected,
+      options
     }
   },
   methods: {
@@ -44,6 +55,58 @@ Vue.component('qrcodeStreamVue', {
     },
     scenCodeClick () {
       this.scenVisible = true
+    },
+    paintOutline (detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
+
+        ctx.strokeStyle = "red";
+
+        ctx.beginPath();
+        ctx.moveTo(firstPoint.x, firstPoint.y);
+        for (const { x, y } of otherPoints) {
+          ctx.lineTo(x, y);
+        }
+        ctx.lineTo(firstPoint.x, firstPoint.y);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    },
+
+    paintBoundingBox (detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const { boundingBox: { x, y, width, height } } = detectedCode
+
+        ctx.lineWidth = 2
+        ctx.strokeStyle = '#007bff'
+        ctx.strokeRect(x, y, width, height)
+      }
+    },
+
+    paintCenterText (detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const { boundingBox, rawValue } = detectedCode
+
+        const centerX = boundingBox.x + boundingBox.width/ 2
+        const centerY = boundingBox.y + boundingBox.height/ 2
+
+        const fontSize = Math.max(12, 50 * boundingBox.width/ctx.canvas.width)
+        console.log(boundingBox.width, ctx.canvas.width)
+
+        ctx.font = `bold ${fontSize}px sans-serif`
+        ctx.textAlign = "center"
+
+        ctx.lineWidth = 3
+        ctx.strokeStyle = '#35495e'
+        ctx.strokeText(detectedCode.rawValue, centerX, centerY)
+
+        ctx.fillStyle = '#5cb984'
+        ctx.fillText(rawValue, centerX, centerY)
+      }
+    },
+
+    logErrors (promise) {
+      promise.catch(console.error)
     },
     async onInit (promise) {
       try {
