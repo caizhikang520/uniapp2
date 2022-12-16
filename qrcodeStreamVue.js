@@ -23,7 +23,7 @@ Vue.component('qrcodeStreamVue', {
         扫描测试
     </div>
     <div @click="switchCamera">
-        切换镜头
+        切换镜头1
     </div>
   </div>
   `,
