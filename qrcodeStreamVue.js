@@ -52,10 +52,10 @@ Vue.component('qrcodeStreamVue', {
       }
     },
     onDecode (result) {
+      this.camera = 'off'
       this.qrScannerVisible = false
       this.scenVisible = false
       this.result = result
-      this.camera = 'off'
     },
     scenCodeClick () {
       this.camera = 'rear'
