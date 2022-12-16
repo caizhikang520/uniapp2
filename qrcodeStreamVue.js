@@ -56,7 +56,7 @@ Vue.component('qrcodeStreamVue', {
       this.camera = 'off'
       this.qrScannerVisible = false
       this.scenVisible = false
-      this.camera = 'auto'
+      this.camera = 'rear'
     },
     onDecode (result) {
       this.closeScenCode()
