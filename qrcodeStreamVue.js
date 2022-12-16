@@ -1,16 +1,10 @@
 Vue.component('qrcodeStreamVue', {
   template: `
   <div>
-    <p class="error">error: {{ error }}</p>photoScenCode
+    <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
     <div @click="scenCodeClick">
         扫描测试
-    </div>
-    <div @click="switchCamera">
-        切换镜头
-    </div>
-    <div @click="photoScenCode">
-        相册
     </div>
 
     <div v-if="qrScannerVisible" class="qr-scanner">
@@ -27,9 +21,12 @@ Vue.component('qrcodeStreamVue', {
       style="z-index:1;height: 100vh;position: fixed;top: 0;left: 0"
       @decode="onDecode"
       @init="onInit"
-    />
-
-    <qrcode-capture @decode="captureDetect" />
+    >
+      <div class="qrcode-stream-title">
+        <span style="font-size: 30px;"><</span>
+        <span style="font-size: 22px;color: #fff">扫一扫</span>
+      <div>
+    </qrcode-stream>
 
   </div>
   `,
@@ -44,40 +41,6 @@ Vue.component('qrcodeStreamVue', {
     }
   },
   methods: {
-    photoScenCode() {
-
-    },
-    async captureDetect(promise) {
-      try {
-        const {
-          imageData,    // raw image data of image/frame
-          content,      // decoded String or null
-          location      // QR code coordinates or null
-        } = await promise
-        console.log(imageData)
-  
-        if (content === null) {
-           // decoded nothing
-        } else {
-           // ...
-        }
-      } catch (error) {
-        // ...
-      }
-    },
-    // 相机反转
-    switchCamera() {
-      switch (this.camera) {
-        case 'front':
-          this.camera = 'rear'
-          break
-        case 'rear':
-          this.camera = 'front'
-          break
-        default:
-          this.$toast('错误')
-      }
-    },
     onDecode (result) {
       console.log(result)
       this.camera = 'off'
