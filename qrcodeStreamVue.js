@@ -28,7 +28,8 @@ Vue.component('qrcodeStreamVue', {
       @decode="onDecode"
       @init="onInit"
     />
-    <qrcode-capture @decode="onDecode" :capture="'environment'" />
+
+    <qrcode-capture @decode="captureDetect" />
 
   </div>
   `,
@@ -44,7 +45,25 @@ Vue.component('qrcodeStreamVue', {
   },
   methods: {
     photoScenCode() {
-      
+
+    },
+    async captureDetect(promise) {
+      try {
+        const {
+          imageData,    // raw image data of image/frame
+          content,      // decoded String or null
+          location      // QR code coordinates or null
+        } = await promise
+        console.log(imageData)
+  
+        if (content === null) {
+           // decoded nothing
+        } else {
+           // ...
+        }
+      } catch (error) {
+        // ...
+      }
     },
     // 相机反转
     switchCamera() {
@@ -60,6 +79,7 @@ Vue.component('qrcodeStreamVue', {
       }
     },
     onDecode (result) {
+      console.log(result)
       this.camera = 'off'
       this.qrScannerVisible = false
       this.scenVisible = false
