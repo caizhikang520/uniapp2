@@ -1,8 +1,17 @@
 Vue.component('qrcodeStreamVue', {
   template: `
   <div>
-    <p class="error">error: {{ error }}</p>
+    <p class="error">error: {{ error }}</p>photoScenCode
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
+    <div @click="scenCodeClick">
+        扫描测试
+    </div>
+    <div @click="switchCamera">
+        切换镜头
+    </div>
+    <div @click="photoScenCode">
+        相册
+    </div>
 
     <div v-if="qrScannerVisible" class="qr-scanner">
         <div class="box">
@@ -19,12 +28,8 @@ Vue.component('qrcodeStreamVue', {
       @decode="onDecode"
       @init="onInit"
     />
-    <div @click="scenCodeClick">
-        扫描测试
-    </div>
-    <div @click="switchCamera">
-        切换镜头1
-    </div>
+    <qrcode-capture @decode="onDecode" :capture="'environment'" />
+
   </div>
   `,
   data() {
@@ -38,6 +43,9 @@ Vue.component('qrcodeStreamVue', {
     }
   },
   methods: {
+    photoScenCode() {
+      
+    },
     // 相机反转
     switchCamera() {
       switch (this.camera) {
