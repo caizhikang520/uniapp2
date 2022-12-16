@@ -4,7 +4,7 @@ Vue.component('qrcodeStreamVue', {
     <p class="error">error: {{ error }}</p>
     <p class="decode-result">Last result: <b>{{ result }}</b></p>
 
-    <div v-if="qrScannerVisible" class="qr-scanner">
+    <div v-if="true" class="qr-scanner">
         <div class="box">
               <div class="line"></div>
               <div class="angle"></div>
@@ -23,7 +23,7 @@ Vue.component('qrcodeStreamVue', {
         扫描测试
     </div>
     <div @click="switchCamera">
-        切换镜头
+        切换镜头test
     </div>
   </div>
   `,
