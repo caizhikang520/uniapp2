@@ -22,8 +22,8 @@ Vue.component('qrcodeStreamVue', {
       @decode="onDecode"
       @init="onInit"
     >
-      <div class="qrcode-stream-title">
-        <span style="font-size: 30px;"><</span>
+      <div v-if="qrScannerVisible" class="qrcode-stream-title">
+        <span style="font-size: 30px;position: absolute;left: 15px;color: #fff"><</span>
         <span style="font-size: 22px;color: #fff">扫一扫</span>
       <div>
     </qrcode-stream>
