@@ -7,12 +7,6 @@ Vue.component('qrcodeStreamVue', {
         扫描测试
     </div>
 
-    <div v-if="qrScannerVisible" class="qr-scanner">
-        <div class="box">
-              <div class="line"></div>
-              <div class="angle"></div>
-          </div>
-    </div>
     <qrcode-stream
       v-if="scenVisible"
       :key="_uid"
@@ -22,10 +16,20 @@ Vue.component('qrcodeStreamVue', {
       @decode="onDecode"
       @init="onInit"
     >
-      <div v-if="qrScannerVisible" class="qrcode-stream-title">
-        <span style="font-size: 30px;position: absolute;left: 15px;color: #fff"><</span>
-        <span style="font-size: 22px;color: #fff">扫一扫</span>
-      <div>
+      <template v-if="qrScannerVisible">
+        <div class="qrcode-stream-title">
+          <div class="qrcode-stream-close" @click="closeScenCode">
+          <
+          </div>
+          <span style="font-size: 22px;color: #fff">扫一扫</span>
+        <div>
+        <div class="qr-scanner">
+          <div class="box">
+                <div class="line"></div>
+                <div class="angle"></div>
+            </div>
+        </div>
+      </template>
     </qrcode-stream>
 
   </div>
@@ -40,16 +44,24 @@ Vue.component('qrcodeStreamVue', {
       camera: 'rear'
     }
   },
+  watch: {
+    camera(val) {
+      if(val){
+        console.log(val)
+      }
+    }
+  },
   methods: {
-    onDecode (result) {
-      console.log(result)
+    closeScenCode () {
       this.camera = 'off'
       this.qrScannerVisible = false
       this.scenVisible = false
+    },
+    onDecode (result) {
+      this.closeScenCode()
       this.result = result
     },
     scenCodeClick () {
-      this.camera = 'rear'
       this.scenVisible = true
     },
     // 扫描成功后给予扫条框
@@ -91,12 +103,13 @@ Vue.component('qrcodeStreamVue', {
     },
     async onInit (promise) {
       try {
-        await promise.finally(()=>{
+        await promise.then(()=>{
           this.$nextTick(()=>{
             this.qrScannerVisible = true
           })
         })
       } catch (error) {
+        this.closeScenCode()
         if (error.name === 'NotAllowedError') {
           this.error = "ERROR: you need to grant camera access permission"
         } else if (error.name === 'NotFoundError') {
