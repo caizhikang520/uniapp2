@@ -26,14 +26,15 @@
             top: 50%;
             transform: translate(-50%, -50%);
             overflow: hidden;
-            border: 0.1rem solid rgba(65, 108, 250, 0.2);
+            border: 0.1rem solid rgb(0 0 0 / 20%);
         }
     
         .qr-scanner .line {
             height: calc(100% - 2px);
             width: 100%;
-            background: linear-gradient(180deg, rgba(0, 255, 51, 0) 43%, #5372fe 211%);
-            border-bottom: 3px solid #5372fe;
+            background: linear-gradient(180deg, rgba(0, 255, 51, 0) 81%, #5372fe 211%);
+            border-bottom: 1px solid #133eff4d;
+            border-radius: 2px;
             transform: translateY(-100%);
             animation: radar-beam 2s infinite;
             animation-timing-function: cubic-bezier(0.53, 0, 0.43, 0.99);
@@ -47,10 +48,10 @@
             content: '';
             display: block;
             position: absolute;
-            width: 3vw;
-            height: 3vw;
+            width: 5vw;
+            height: 5vw;
     
-            border: 0.2rem solid transparent;
+            border: 2px solid transparent;
         }
     
         .qr-scanner .box:after,
